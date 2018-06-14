@@ -34,5 +34,9 @@ namespace WinDoorsWPF.Model
         {
             return Height * Width;
         }
+
+
+        
+
     }
 }
