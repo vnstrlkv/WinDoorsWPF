@@ -10,19 +10,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-
-namespace WinDoorsWPF
+using WinDoorsWPF.Model;
+using WinDoorsWPF.View;
+using WinDoorsWPF.ViewModel;
+namespace WinDoorsWPF.View
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для CalculateWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class CalculateWindow : Window
     {
-        public MainWindow()
+        public CalculateWindow()
         {
             InitializeComponent();
+            
+
         }
+
+       
     }
 }

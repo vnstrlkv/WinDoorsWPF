@@ -8,11 +8,14 @@ namespace WinDoorsWPF.Model
 {
     class PriceList
     {
-        List<Material> Materials { get; set; }
-        List<Material> Service { get; set; }
+      public  List<Material> Materials { get; set; }
 
 
-
+        public PriceList()
+        {
+            Materials = new List<Material>();
+        }
+                     
         
     }
 }
