@@ -14,13 +14,29 @@ using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using System.Threading;
 using System.Globalization;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace WinDoorsWPF.ViewModel
 {
-    class Price
+    class Price : INotifyPropertyChanged
     {
-       public PriceList priceList=new PriceList();
+        PriceList pList = new PriceList();
 
+       public PriceList PList
+        {
+            get { return pList; }
+            set { pList = value; OnPropertyChanged("pList"); }
+        }
+
+
+        public Price()
+        {
+            //GetPricesGoogle();
+        }
+            
+
+        
         public static double GetDouble(string value, double defaultValue)
         {
             double result;
@@ -40,6 +56,7 @@ namespace WinDoorsWPF.ViewModel
 
         public void GetPricesGoogle()
         {
+            PriceList tmpPrice = new PriceList();
             string[] Scopes = { SheetsService.Scope.SpreadsheetsReadonly };
             string ApplicationName = "WindowsDoors";
             UserCredential credential;
@@ -104,12 +121,14 @@ namespace WinDoorsWPF.ViewModel
                                 case 2:
                                     { tmp.Price = GetDouble(row[j].ToString(), -1) ; break; }
                             }
-                            priceList.Materials.Add(tmp);
+                            tmpPrice.Materials.Add(tmp);
                         }
                     i++;
 
                 }
             }
+
+            PList = tmpPrice;
          
         }
         public void GetPrices()
@@ -140,5 +159,16 @@ namespace WinDoorsWPF.ViewModel
             }
             return dt;
         }
+
+
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
+
     }
 }

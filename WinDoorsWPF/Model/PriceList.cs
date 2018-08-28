@@ -15,7 +15,5 @@ namespace WinDoorsWPF.Model
         {
             Materials = new List<Material>();
         }
-                     
-        
     }
 }

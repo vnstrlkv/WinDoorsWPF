@@ -22,52 +22,64 @@ namespace WinDoorsWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        Person person=new Person();
+     //   Person person=new Person();
+        Price price = new Price();
+        
         public MainWindow()
         {
             InitializeComponent();
-            Price m = new Price();
-            m.GetPricesGoogle();
+            price.GetPricesGoogle();
+         //   Price m = new Price();
+        //    m.GetPricesGoogle();
             // dataGrid.ItemsSource = m.priceList.Materials; 
-            materialList.ItemsSource = m.priceList.Materials;
-            materialList.DisplayMemberPath = "Name";
+         //   materialList.ItemsSource = m.priceList.Materials;
+       //     materialList.DisplayMemberPath = "Name";
 
         }
 
         private void calculateButton_Click(object sender, RoutedEventArgs e)
         {
 
-            Window_ windows = new Window_();
-            windows.Height = windows.GetDouble(heightBox.Text, 0);
-            windows.Width = windows.GetDouble(widthBox.Text, 0);
+         //   Window_ windows = new Window_();
+        //    windows.Height = windows.GetDouble(heightBox.Text, 0);
+        //    windows.Width = windows.GetDouble(widthBox.Text, 0);
           //  windows.Delivery = GetDouble(delivery.Text, 0);
        //     windows.InstallWindow = GetDouble(installWindow.Text, 0);
         //    windows.Metering = GetDouble(metering.Text, 0);
         //    if (person.FirstName != nameBox1.Text || person.SecondName != nameBox2.Text)
             {
-                person = new Person();
-                person.Name = sNameBox.Text + " " + fNameBox.Text;
-                person.Phone = phoneNumber.Text;
+      //          person = new Person();
+      //          person.Name = sNameBox.Text + " " + fNameBox.Text;
+      //          person.Phone = phoneNumber.Text;
             }
-            windows.Deaf = checkDeaf.IsChecked.Value;
+         //   windows.Deaf = checkDeaf.IsChecked.Value;
        //     windows.OpenWindow = openWindow.Checked;
       //      windows.Pipe = checkPipe1.Checked;
        //     windows.PaintPipe = paintPipe.Checked;
        //     windows.FullOpenWindow = fullOpenWindow.Checked;
        //     windows.Flash = flash1.Checked;
 
-            if (materialList.SelectedItem != null)
+        //    if (materialList.SelectedItem != null)
             {
                 
-                windows.Material = materialList.SelectedValue.ToString();
+        //        windows.Material = materialList.SelectedValue.ToString();
 
 
                 //windows.Cutting = cuttingbox.Checked;
               //  person.Windows.Add(windows);
 
                 CalculateWindow f = new CalculateWindow ();
+                
                 f.Show();
             }
+        }
+
+        private void priceButton_Click(object sender, RoutedEventArgs e)
+        {
+            PriceListWindow f = new PriceListWindow();
+            f.DataContext = price;
+            f.Show();
+
         }
     }
 }
