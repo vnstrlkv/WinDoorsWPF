@@ -8,8 +8,9 @@
         mc:Ignorable="d"
         Title="PriceListWindow" Height="450" Width="800">
     <Grid>
-        <DataGrid  Name="priceListGrid" ItemsSource="{Binding PList.Materials}"  HorizontalAlignment="Left" Height="215" Margin="160,105,0,0" VerticalAlignment="Top" Width="568">
+        <DataGrid  Name="priceListGrid" ItemsSource="{Binding PList.Materials}"   HorizontalAlignment="Left" Height="215" Margin="160,105,0,0" VerticalAlignment="Top" Width="568">
   
         </DataGrid>
+        <Button Content="GetPriceGoogle" Command="{Binding GetPricesGoogleCom}" HorizontalAlignment="Left" Margin="629,383,0,0" VerticalAlignment="Top" Width="75"/>
     </Grid>
 </Window>

@@ -10,7 +10,7 @@ namespace WinDoorsWPF.ViewModel
     class PersonVM
     {
         Person person = new Person();
-        Price pricelist = new Price();
+        
 
     }
 }

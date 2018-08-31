@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WinDoorsWPF.Model;
 using System.IO;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using System.Data;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Sheets.v4;
@@ -16,11 +17,25 @@ using System.Threading;
 using System.Globalization;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace WinDoorsWPF.ViewModel
 {
     class Price : INotifyPropertyChanged
     {
+        public ICommand GetPricesGoogleCom
+        {
+            get { GetPricesGoogle(); DataToWorksheet() ; return null; }
+
+        }
+
+        public ICommand GetPricesCom
+        {
+            get { GetPrices(); return null; }
+
+        }
+
+
         PriceList pList = new PriceList();
 
        public PriceList PList
@@ -35,7 +50,7 @@ namespace WinDoorsWPF.ViewModel
             //GetPricesGoogle();
         }
             
-
+        
         
         public static double GetDouble(string value, double defaultValue)
         {
@@ -136,7 +151,28 @@ namespace WinDoorsWPF.ViewModel
             FileInfo newFile = new FileInfo("price.xlsx");
             ExcelPackage package = new ExcelPackage(newFile);
             ExcelWorksheet osheet = package.Workbook.Worksheets[1];
-           // Materials = WorksheetToDataTable(osheet);
+            // Materials = WorksheetToDataTable(osheet);
+            DataTable tmpMatDT = WorksheetToDataTable(osheet);
+            PriceList tmpPrice = new PriceList();
+            foreach(DataRow values in tmpMatDT.Rows)
+            {
+                Material tmp = new Material();
+                for (int j = 0; j < 3; j++)
+                 //   if (values[j] != null)
+                    {
+                        switch (j)
+                        {
+                            case 0:
+                                { tmp.Name = values[j].ToString(); break; }
+                            case 1:
+                                { tmp.Metr = values[j].ToString(); break; }
+                            case 2:
+                                { tmp.Price = GetDouble(values[j].ToString(), -1); break; }
+                        }
+                        tmpPrice.Materials.Add(tmp);
+                    }
+            }
+            pList = tmpPrice;
         }
 
         private DataTable WorksheetToDataTable(ExcelWorksheet oSheet)
@@ -160,8 +196,53 @@ namespace WinDoorsWPF.ViewModel
             return dt;
         }
 
+        public void DataToWorksheet()
+        {
+            FileInfo newFile = new FileInfo("price.xlsx");
+            //  newFile.Delete();
+            using (ExcelPackage pck = new ExcelPackage(newFile))
+            {
+
+                ExcelWorksheet ws = pck.Workbook.Worksheets[1];
+                DataTable pG = ConvertToDataTable(pList.Materials);
+
+                ws.Cells["A1"].LoadFromDataTable(pG, true);
 
 
+                ws.Cells.Style.Font.Size = 12; // Размер шрифта по умолчанию для всего листа
+                ws.Cells.Style.Font.Name = "Times New Roman"; // Default Имя шрифта для всего листа
+
+                using (var cells = ws.Cells[ws.Dimension.Address])
+                {
+                    cells.Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                    cells.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                    cells.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                    cells.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                    cells.AutoFitColumns();
+                }
+
+                pck.Save();
+
+            }
+        }
+
+        private DataTable ConvertToDataTable<T>(IList<T> data)
+        {
+            PropertyDescriptorCollection properties =
+               TypeDescriptor.GetProperties(typeof(T));
+            DataTable table = new DataTable();
+            foreach (PropertyDescriptor prop in properties)
+                table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+            foreach (T item in data)
+            {
+                DataRow row = table.NewRow();
+                foreach (PropertyDescriptor prop in properties)
+                    row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
+                table.Rows.Add(row);
+            }
+            return table;
+
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")

@@ -23,12 +23,13 @@ namespace WinDoorsWPF
     public partial class MainWindow : Window
     {
      //   Person person=new Person();
-        Price price = new Price();
+    //    Price price = new Price();
         
         public MainWindow()
         {
             InitializeComponent();
-            price.GetPricesGoogle();
+            DataContext = new Price();
+            //.GetPricesGoogle();
          //   Price m = new Price();
         //    m.GetPricesGoogle();
             // dataGrid.ItemsSource = m.priceList.Materials; 
@@ -77,7 +78,7 @@ namespace WinDoorsWPF
         private void priceButton_Click(object sender, RoutedEventArgs e)
         {
             PriceListWindow f = new PriceListWindow();
-            f.DataContext = price;
+            f.DataContext = DataContext;
             f.Show();
 
         }
