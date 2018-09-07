@@ -21,21 +21,28 @@ using System.Windows.Input;
 
 namespace WinDoorsWPF.ViewModel
 {
-    class Price : INotifyPropertyChanged
+    class WinDoorVM : INotifyPropertyChanged
     {
         public ICommand GetPricesGoogleCom
         {
-            get { GetPricesGoogle(); DataToWorksheet() ; return null; }
+            get {
+                if (GetPricesGoogleCom == null)
+                {
+                    GetPricesGoogle(); DataToWorksheet();
+                }
+                return GetPricesGoogleCom; }
 
         }
 
         public ICommand GetPricesCom
         {
-            get { GetPrices(); return null; }
-
+            get {
+                GetPrices();
+                return GetPricesCom;
+            }
         }
 
-
+        Person person = new Person();
         PriceList pList = new PriceList();
 
        public PriceList PList
@@ -45,7 +52,7 @@ namespace WinDoorsWPF.ViewModel
         }
 
 
-        public Price()
+        public WinDoorVM()
         {
             //GetPricesGoogle();
         }

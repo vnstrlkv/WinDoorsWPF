@@ -99,7 +99,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModel\PersonVM.cs" />
-    <Compile Include="ViewModel\Price.cs" />
+    <Compile Include="ViewModel\WinDoorVM.cs" />
     <Compile Include="View\PriceListWindow.xaml.cs">
       <DependentUpon>PriceListWindow.xaml</DependentUpon>
     </Compile>

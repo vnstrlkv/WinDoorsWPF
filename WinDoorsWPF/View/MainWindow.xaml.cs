@@ -28,7 +28,7 @@ namespace WinDoorsWPF
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new Price();
+            DataContext = new WinDoorVM();
             //.GetPricesGoogle();
          //   Price m = new Price();
         //    m.GetPricesGoogle();
