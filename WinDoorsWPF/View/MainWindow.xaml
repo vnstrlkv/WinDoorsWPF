@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:WinDoorsWPF"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="800">
+
+
     <Grid Height="572" Margin="0,0,-0.4,0" VerticalAlignment="Top">
         <TextBox x:Name="sNameBox" HorizontalAlignment="Left" Height="40" Margin="50,48,0,0" TextWrapping="Wrap" Text="Фамилия" VerticalAlignment="Top" Width="225"/>
         <TextBox x:Name="fNameBox" HorizontalAlignment="Left" Height="40" Margin="50,93,0,0" TextWrapping="Wrap" Text="Имя" VerticalAlignment="Top" Width="225"/>
@@ -14,9 +16,9 @@
         <TextBox x:Name="heightBox" HorizontalAlignment="Left" Height="23" Margin="549,48,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120"/>
         <TextBlock HorizontalAlignment="Left" Margin="403,10,0,0" TextWrapping="Wrap" Text="Ширина" VerticalAlignment="Top" Height="33" Width="120" RenderTransformOrigin="1.569,0.744"/>
         <TextBlock HorizontalAlignment="Left" Margin="549,10,0,0" TextWrapping="Wrap" Text="Высота" VerticalAlignment="Top" Height="33" Width="120" RenderTransformOrigin="1.569,0.744"/>
-        <ComboBox x:Name="materialList" HorizontalAlignment="Left" Height="45" Margin="125,211,0,0" VerticalAlignment="Top" Width="544"/>
+        <ComboBox x:Name="materialList" ItemsSource="{Binding PList.Materials}" DisplayMemberPath="Name" HorizontalAlignment="Left" Height="45" Margin="125,211,0,0" VerticalAlignment="Top" Width="544"/>
         <CheckBox x:Name="checkDeaf" Content="Глухое" HorizontalAlignment="Left" Margin="75,312,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="calculateButton" Content="Рассчет" HorizontalAlignment="Left" Height="108" Margin="612,454,0,0" VerticalAlignment="Top" Width="172" Click="calculateButton_Click"/>
-        <Button Name="priceButton" Content="Прайс" Command="{Binding GetPricesCom}" HorizontalAlignment="Left" Margin="339,513,0,0" VerticalAlignment="Top" Width="125" Height="31" Click="priceButton_Click"/>
+        <Button x:Name="calculateButton" Command="{Binding CalculateWindow}" Content="Рассчет" HorizontalAlignment="Left" Height="108" Margin="612,454,0,0" VerticalAlignment="Top" Width="172" Click="calculateButton_Click"/>
+        <Button Name="priceButton" Content="Прайс"  Command="{Binding GetPricesCom}"  HorizontalAlignment="Left" Margin="339,513,0,0" VerticalAlignment="Top" Width="125" Height="31" Click="priceButton_Click" />
     </Grid>
 </Window>

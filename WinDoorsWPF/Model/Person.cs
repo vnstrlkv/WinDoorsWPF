@@ -13,7 +13,7 @@ namespace WinDoorsWPF.Model
         private int id { get; set; }
         private string name { get; set; }
         private string phone { get; set; }
-        private List<Window_> windows { get; set; }
+        private List<Window_с> windows { get; set; }
 
         public int Id
         {
@@ -43,7 +43,7 @@ namespace WinDoorsWPF.Model
                 OnPropertyChanged("Phone");
             }
         }
-        public List<Window_>Windows
+        public List<Window_с>Windows
         {
             get { return windows; }
             set

@@ -23,59 +23,59 @@ namespace WinDoorsWPF.ViewModel
 {
     class WinDoorVM : INotifyPropertyChanged
     {
-        public ICommand GetPricesGoogleCom
-        {
-            get {
-                if (GetPricesGoogleCom == null)
-                {
-                    GetPricesGoogle(); DataToWorksheet();
-                }
-                return GetPricesGoogleCom; }
 
-        }
-
-        public ICommand GetPricesCom
+        public RelayCommand GetPricesGoogleCom => new RelayCommand(o =>
         {
-            get {
-                GetPrices();
-                return GetPricesCom;
-            }
-        }
+            //Логика команды
+            GetPricesGoogle();
+            DataToWorksheet();
+        });
+
+        public RelayCommand GetPricesCom => new RelayCommand(o =>
+        {
+            //Логика команды
+         //   GetPrices();
+        });
+
+        public RelayCommand CalculateWindow => new RelayCommand(o =>
+        {
+            //Логика команды
+            //   GetPrices();
+            CalculateWindows();
+        });
+        
 
         Person person = new Person();
         PriceList pList = new PriceList();
+        Window_с window = new Window_с();
+
+        
+        
+
 
        public PriceList PList
         {
             get { return pList; }
             set { pList = value; OnPropertyChanged("pList"); }
         }
+        public Window_с Windoww
+        {
+            get { return window; }
+            set { window = value; OnPropertyChanged("window"); }
+        }
 
 
         public WinDoorVM()
         {
-            //GetPricesGoogle();
+            GetPrices();
         }
             
         
         
-        public static double GetDouble(string value, double defaultValue)
-        {
-            double result;
+       
 
-            //Try parsing in the current culture
-            if (!double.TryParse(value, System.Globalization.NumberStyles.Any, CultureInfo.CurrentCulture, out result) &&
-                //Then try in US english
-                !double.TryParse(value, System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out result) &&
-                //Then in neutral language
-                !double.TryParse(value, System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture, out result))
-            {
-                result = defaultValue;
-            }
 
-            return result;
-        }
-
+        //прайс
         public void GetPricesGoogle()
         {
             PriceList tmpPrice = new PriceList();
@@ -108,7 +108,7 @@ namespace WinDoorsWPF.ViewModel
 
             // Define request parameters.
             String spreadsheetId = "1St3ncTv58_rLWLWtT8LnOQyu1ddAPTW9BoghcuwgDBM";
-            String range = "1!A1:C38";
+            String range = "1!A:D";
             SpreadsheetsResource.ValuesResource.GetRequest request =
                     service.Spreadsheets.Values.Get(spreadsheetId, range);
 
@@ -137,16 +137,22 @@ namespace WinDoorsWPF.ViewModel
                             switch (j)
                             {
                                 case 0:
-                                    { tmp.Name = row[j].ToString(); break; }
+                                    {
+                                        tmp.Type = row[j].ToString(); break;
+                                    }
                                 case 1:
-                                    { tmp.Metr = row[j].ToString(); break; }
+                                    { tmp.Name = row[j].ToString(); break; }
                                 case 2:
+                                    { tmp.Metr = row[j].ToString(); break; }
+                                case 3:
                                     { tmp.Price = GetDouble(row[j].ToString(), -1) ; break; }
                             }
-                            tmpPrice.Materials.Add(tmp);
+                        
                         }
+                    if(i>0)
+                        tmpPrice.Materials.Add(tmp);
                     i++;
-
+                   
                 }
             }
 
@@ -155,33 +161,55 @@ namespace WinDoorsWPF.ViewModel
         }
         public void GetPrices()
         {
+            
             FileInfo newFile = new FileInfo("price.xlsx");
             ExcelPackage package = new ExcelPackage(newFile);
             ExcelWorksheet osheet = package.Workbook.Worksheets[1];
             // Materials = WorksheetToDataTable(osheet);
             DataTable tmpMatDT = WorksheetToDataTable(osheet);
             PriceList tmpPrice = new PriceList();
-            foreach(DataRow values in tmpMatDT.Rows)
+            foreach(DataRow row in tmpMatDT.Rows)
             {
                 Material tmp = new Material();
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j<4; j++)
                  //   if (values[j] != null)
                     {
                         switch (j)
                         {
-                            case 0:
-                                { tmp.Name = values[j].ToString(); break; }
-                            case 1:
-                                { tmp.Metr = values[j].ToString(); break; }
-                            case 2:
-                                { tmp.Price = GetDouble(values[j].ToString(), -1); break; }
+                        case 0:
+                            {
+                                tmp.Type =row[j].ToString(); break;
+                            }
+                        case 1:
+                            { tmp.Name = row[j].ToString(); break; }
+                        case 2:
+                            { tmp.Metr = row[j].ToString(); break; }
+                        case 3:
+                            { tmp.Price = GetDouble(row[j].ToString(), -1); break; }
                         }
-                        tmpPrice.Materials.Add(tmp);
+                        
                     }
+                tmpPrice.Materials.Add(tmp);
             }
-            pList = tmpPrice;
+            PList= tmpPrice;            
+        }
+        //прайс
+
+        //расчет окон
+        public void CalculateWindows()
+        {
+            double BK = 1.13;
+            double Size = 1.5;
+            double SizeMaterial = 1.4;
+            Windoww.Type = 0;
+            Windoww.SetFurniture(pList);
         }
 
+
+
+
+
+        //вспомогательные
         private DataTable WorksheetToDataTable(ExcelWorksheet oSheet)
         {
             int totalRows = oSheet.Dimension.End.Row;
@@ -202,16 +230,18 @@ namespace WinDoorsWPF.ViewModel
             }
             return dt;
         }
-
         public void DataToWorksheet()
         {
             FileInfo newFile = new FileInfo("price.xlsx");
-            //  newFile.Delete();
+            //newFile.Delete();
+          //  newFile.Create();
+            
             using (ExcelPackage pck = new ExcelPackage(newFile))
             {
 
                 ExcelWorksheet ws = pck.Workbook.Worksheets[1];
                 DataTable pG = ConvertToDataTable(pList.Materials);
+                
 
                 ws.Cells["A1"].LoadFromDataTable(pG, true);
 
@@ -232,7 +262,6 @@ namespace WinDoorsWPF.ViewModel
 
             }
         }
-
         private DataTable ConvertToDataTable<T>(IList<T> data)
         {
             PropertyDescriptorCollection properties =
@@ -250,6 +279,32 @@ namespace WinDoorsWPF.ViewModel
             return table;
 
         }
+        public static double GetDouble(string value, double defaultValue)
+        {
+            double result;
+
+            //Try parsing in the current culture
+            if (!double.TryParse(value, System.Globalization.NumberStyles.Any, CultureInfo.CurrentCulture, out result) &&
+                //Then try in US english
+                !double.TryParse(value, System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out result) &&
+                //Then in neutral language
+                !double.TryParse(value, System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture, out result))
+            {
+                result = defaultValue;
+            }
+
+            return result;
+        }
+        //всмомогательные
+
+
+
+
+
+
+
+
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")

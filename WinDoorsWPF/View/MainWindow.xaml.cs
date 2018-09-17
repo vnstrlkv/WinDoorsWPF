@@ -70,7 +70,7 @@ namespace WinDoorsWPF
               //  person.Windows.Add(windows);
 
                 CalculateWindow f = new CalculateWindow ();
-                
+                f.DataContext = DataContext;
                 f.Show();
             }
         }

@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace WinDoorsWPF.Model
 {
-    class Material
+   public class Material 
     {
-        private int type;
+        private string type;
         private string name;
         private string metr;
         private double price;
-        public int Type
+        public string Type
         {
-            get { return type; }
+           get { return type; }
             set { type = value; }
         }
         public string Name
@@ -37,11 +37,13 @@ namespace WinDoorsWPF.Model
 
         public Material()
         {
-            type = 0; // 0 - материал, 1 - фрунитра, 2 - работа
+            type = ""; // 0 - материал, 1 - фрунитра, 2 - работа
             Name = "";
             Metr = "";
             Price = 0;
         }
+
+
 
     }
 

@@ -99,6 +99,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModel\PersonVM.cs" />
+    <Compile Include="ViewModel\RelayCommand.cs" />
     <Compile Include="ViewModel\WinDoorVM.cs" />
     <Compile Include="View\PriceListWindow.xaml.cs">
       <DependentUpon>PriceListWindow.xaml</DependentUpon>
@@ -131,7 +132,7 @@
     <Compile Include="Model\Material.cs" />
     <Compile Include="Model\Person.cs" />
     <Compile Include="Model\PriceList.cs" />
-    <Compile Include="Model\Window_.cs" />
+    <Compile Include="Model\Window_с.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

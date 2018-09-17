@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WinDoorsWPF.Model
 {
-    class PriceList
+  public class PriceList
     {
       public  List<Material> Materials { get; set; }
 

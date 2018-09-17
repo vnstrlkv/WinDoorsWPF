@@ -7,25 +7,21 @@ using System.Globalization;
 
 namespace WinDoorsWPF.Model
 {
-   public class Window_
+   public class Window_с
     {
         public double Height { get; set; }
         public double Width { get; set; }
-        public string Material { get; set; }
-        
-
-        public bool Deaf { get; set; }
-        public bool OpenWindow { get; set; }
-        public bool Pipe { get; set; }
-        public bool PaintPipe { get; set; }
-        public bool Flash { get; set; }
-
-        public bool FullOpenWindow { get; set; }
-
+        public Material material { get; set; }
+        List<Material> furniture = new List<Material>();
+        public List<Material> Furniture
+        {
+            get { return furniture; }
+            set { furniture = value; }
+        }
+        public double Type { get; set; } // 0 - глухое, 1 - открывающееся, 2 - на молнии, 3 - полностью открывающееся
+                      
         public bool Cutting { get; set; }
-
-
-
+        
         public double Perimeter()
         {
             return (Height + Width) * 2;
@@ -36,6 +32,26 @@ namespace WinDoorsWPF.Model
             return Height * Width;
         }
 
+        public void SetFurniture(PriceList price)
+        {
+            switch (this.Type)
+            {
+                case 0:
+                    var tmpfurn=price.Materials.First(x => x.Name=="Люверс 6мм");
+                    furniture.Add(tmpfurn);
+                    return;
+                case 1:
+                    return;
+                case 2:
+                    return;
+                case 3:
+                    return;
+
+
+
+            }
+
+        }
 
         public double GetDouble(string value, double defaultValue)
         {
