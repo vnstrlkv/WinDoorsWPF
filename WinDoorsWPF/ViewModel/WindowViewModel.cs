@@ -7,7 +7,7 @@ using WinDoorsWPF.Model;
 using WinDoorsWPF.View;
 namespace WinDoorsWPF.ViewModel
 {
-    class PersonVM
+    class WindowViewModel
     {
         Person person = new Person();
         

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
-namespace WinDoorsWPF.Model
+namespace WinDoorsWPF.Model 
 {
-   public class Material 
+   public class Material : INotifyPropertyChanged
     {
         private string type;
         private string name;
@@ -15,24 +17,24 @@ namespace WinDoorsWPF.Model
         public string Type
         {
            get { return type; }
-            set { type = value; }
+            set { type = value; OnPropertyChanged("Type"); }
         }
         public string Name
         {
             get { return name; }
-            set { name = value; }
+            set { name = value; OnPropertyChanged("Name"); }
         }
 
         public string Metr
         {
             get { return metr; }
-            set { metr = value; }
+            set { metr = value; OnPropertyChanged("Metr"); }
         }
 
         public double Price
         {
             get { return price; }
-            set { price = value; }
+            set { price = value; OnPropertyChanged("Price"); }
         }
 
         public Material()
@@ -44,6 +46,12 @@ namespace WinDoorsWPF.Model
         }
 
 
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
 
     }
 

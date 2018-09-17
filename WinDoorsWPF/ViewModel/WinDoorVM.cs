@@ -56,12 +56,12 @@ namespace WinDoorsWPF.ViewModel
        public PriceList PList
         {
             get { return pList; }
-            set { pList = value; OnPropertyChanged("pList"); }
+            set { pList = value; OnPropertyChanged("PList"); }
         }
         public Window_с Windoww
         {
             get { return window; }
-            set { window = value; OnPropertyChanged("window"); }
+            set { window = value; OnPropertyChanged("Window"); }
         }
 
 

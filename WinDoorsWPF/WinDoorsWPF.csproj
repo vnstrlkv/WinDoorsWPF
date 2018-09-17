@@ -98,7 +98,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ViewModel\PersonVM.cs" />
+    <Compile Include="ViewModel\WindowViewModel.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
     <Compile Include="ViewModel\WinDoorVM.cs" />
     <Compile Include="View\PriceListWindow.xaml.cs">

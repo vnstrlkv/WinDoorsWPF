@@ -4,19 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Collections.ObjectModel;
 
 namespace WinDoorsWPF.Model
 {
-   public class Window_с
+   public class Window_с : INotifyPropertyChanged
     {
         public double Height { get; set; }
         public double Width { get; set; }
         public Material material { get; set; }
-        List<Material> furniture = new List<Material>();
-        public List<Material> Furniture
+        ObservableCollection<Material> furniture = new ObservableCollection<Material>();
+        public ObservableCollection<Material> Furniture
         {
             get { return furniture; }
-            set { furniture = value; }
+            set { furniture = value; OnPropertyChanged("Furniture"); }
         }
         public double Type { get; set; } // 0 - глухое, 1 - открывающееся, 2 - на молнии, 3 - полностью открывающееся
                       
@@ -68,6 +71,13 @@ namespace WinDoorsWPF.Model
             }
 
             return result;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
 
     }
