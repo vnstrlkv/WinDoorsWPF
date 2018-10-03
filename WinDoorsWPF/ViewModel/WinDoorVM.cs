@@ -41,6 +41,7 @@ namespace WinDoorsWPF.ViewModel
         {
             //Логика команды
             //   GetPrices();
+          //  window = new Window_с();
             CalculateWindows();
         });
         
@@ -58,7 +59,7 @@ namespace WinDoorsWPF.ViewModel
             get { return pList; }
             set { pList = value; OnPropertyChanged("PList"); }
         }
-        public Window_с Windoww
+        public Window_с Window_Client
         {
             get { return window; }
             set { window = value; OnPropertyChanged("Window"); }
@@ -138,6 +139,7 @@ namespace WinDoorsWPF.ViewModel
                             {
                                 case 0:
                                     {
+                                        
                                         tmp.Type = row[j].ToString(); break;
                                     }
                                 case 1:
@@ -201,8 +203,8 @@ namespace WinDoorsWPF.ViewModel
             double BK = 1.13;
             double Size = 1.5;
             double SizeMaterial = 1.4;
-            Windoww.Type = 0;
-            Windoww.SetFurniture(pList);
+            
+            Window_Client.SetFurniture(pList);
         }
 
 

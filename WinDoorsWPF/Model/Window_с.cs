@@ -12,16 +12,71 @@ namespace WinDoorsWPF.Model
 {
    public class Window_с : INotifyPropertyChanged
     {
-        public double Height { get; set; }
-        public double Width { get; set; }
+        public Window_с()
+        {
+            Height = 0;
+            Width = 0;
+            material = new Material();
+            furniture = new ObservableCollection<Material>();
+            deaf = false;
+            type = -1;
+        }
+
+
+
+
+        private double height;
+        public double Height
+        {
+            get { return height; }
+            set
+            {
+                height = value;
+                OnPropertyChanged("Height");
+            }
+        }
+
+
+        private double width;
+        public double Width
+        {
+            get { return width; }
+            set
+            {
+                width = value;
+                OnPropertyChanged("Width");
+            }
+        }
         public Material material { get; set; }
-        ObservableCollection<Material> furniture = new ObservableCollection<Material>();
+        ObservableCollection<Material> furniture ;
         public ObservableCollection<Material> Furniture
         {
             get { return furniture; }
             set { furniture = value; OnPropertyChanged("Furniture"); }
         }
-        public double Type { get; set; } // 0 - глухое, 1 - открывающееся, 2 - на молнии, 3 - полностью открывающееся
+
+
+        private bool deaf;
+
+        public bool Deaf
+        {
+            get { return deaf; }
+            set
+            {
+                deaf = value;
+                if (value)
+                    Type = 0;
+                else Type = -1;
+                OnPropertyChanged("Deaf");
+            }
+        }
+        
+        private double type; // 0 - глухое, 1 - открывающееся, 2 - на молнии, 3 - полностью открывающееся
+        public double Type
+        {
+            get { return type; }
+            set { type = value; OnPropertyChanged("Type"); }
+        }
                       
         public bool Cutting { get; set; }
         
@@ -40,8 +95,8 @@ namespace WinDoorsWPF.Model
             switch (this.Type)
             {
                 case 0:
-                    var tmpfurn=price.Materials.First(x => x.Name=="Люверс 6мм");
-                    furniture.Add(tmpfurn);
+                    Material tmp = new Material(price.Materials.First(x => x.Name=="Люверс 6мм"));                     
+                    furniture.Add(tmp);
                     return;
                 case 1:
                     return;
@@ -55,6 +110,11 @@ namespace WinDoorsWPF.Model
             }
 
         }
+
+
+
+
+
 
         public double GetDouble(string value, double defaultValue)
         {

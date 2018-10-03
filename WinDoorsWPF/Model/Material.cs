@@ -45,6 +45,14 @@ namespace WinDoorsWPF.Model
             Price = 0;
         }
 
+        public Material (Material mat)
+        {
+            type = mat.Type;
+            Name = mat.Name;
+            Metr = mat.Metr;
+            Price = mat.Price;
+
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
@@ -52,6 +60,11 @@ namespace WinDoorsWPF.Model
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
+
+    }
+
+    public class MaterialClient : Material
+    {
 
     }
 

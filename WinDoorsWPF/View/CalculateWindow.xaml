@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="CalculateWindow" Height="450" Width="800">
     <Grid>
-        <DataGrid Name="CalculateGrid" ItemsSource="{Binding Windoww.Furniture, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Height="222" Margin="130,50,0,0" VerticalAlignment="Top" Width="507" />
+        <DataGrid Name="CalculateGrid" ItemsSource="{Binding Window_Client.Furniture, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Height="222" Margin="130,50,0,0" VerticalAlignment="Top" Width="507" />
 
     </Grid>
 </Window>
